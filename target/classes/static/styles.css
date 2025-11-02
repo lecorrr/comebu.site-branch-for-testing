@@ -1,0 +1,1388 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+/* =============================== */
+/* 🌿 БАЗОВІ СТИЛІ САЙТУ */
+/* =============================== */
+body {
+  font-family: "Inter", sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  zoom: 1.4;
+}
+
+/* Fix: prevent horizontal overflow and ensure padding is included in width */
+/* *,
+*::before,
+*::after {
+  box-sizing: border-box;
+} */
+
+/* =============================== */
+/* 🧭 ХЕДЕР (верхня частина сайту) */
+/* =============================== */
+header {
+  display: flex;
+  flex-wrap: wrap;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-width: 320px;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 4vw;
+  background: white;
+  z-index: 100;
+}
+
+/* 🔹 Логотип */
+.logo {
+  font-weight: 800;
+  color: #009956;
+  font-size: 2.2rem;
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* prevent underline when logo is an <a> */
+  cursor: pointer;
+}
+.logo-img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+/* =============================== */
+/* 🧭 НАВІГАЦІЯ */
+/* =============================== */
+.nav-center a {
+  font-weight: 500;
+  transition: color 0.3s, background 0.3s;
+  padding: 8px 18px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: black;
+}
+.nav-center a:hover {
+  background: #e9e9e9;
+}
+.nav-center a:active {
+  background: #d8d8d8;
+}
+
+/* =============================== */
+/* 🏠 ГОЛОВНА СЕКЦІЯ (HERO) */
+/* =============================== */
+.hero {
+  text-align: left;
+  padding: 12vh 5vw;
+  max-width: 100%;
+  background: url("images/products.png") no-repeat;
+  background-position: right -80px bottom 75%;
+  background-size: clamp(250px, 40vw, 600px) auto;
+  position: relative;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(136, 136, 136, 0.35) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+}
+.hero h1 {
+  margin-top: 60px;
+  font-size: clamp(24px, 4vw, 48px);
+  font-weight: 700;
+  position: relative;
+  z-index: 2;
+  line-height: 1.3;
+}
+
+/* =============================== */
+/* 🔘 КНОПКИ ПІД HERO */
+/* =============================== */
+.buttons {
+  display: flex;
+  text-align: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 120px;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+button.halo {
+  font-weight: 700;
+  width: min(90%, 310px);
+  min-height: 120px;
+  background: white;
+  border: 2px solid #009956;
+  border-radius: 30px;
+  padding: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+button.halo:hover {
+  background: #eaeaea;
+  transform: translateY(-3px);
+}
+
+/* =============================== */
+/* 🧩 ІКОНКИ ТА БУРГЕР */
+/* =============================== */
+.icons {
+  display: flex;
+  gap: 8px;
+  font-size: 20px;
+  align-items: center;
+  position: relative;
+  padding: 6px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.icons img {
+  padding: 6px;
+  border-radius: 12px;
+  transition: background 0.3s;
+}
+.icons img:hover {
+  background: #e9e9e9;
+}
+.icons img:active {
+  background: #d8d8d8;
+}
+
+/* 🍔 Бургер-меню */
+.burger {
+  display: none;
+  font-size: 26px;
+  user-select: none;
+  margin-right: auto;
+  cursor: pointer;
+}
+
+/* =============================== */
+/* 🔍 ПОШУК */
+/* =============================== */
+.search-icon {
+  position: relative;
+}
+.search-box {
+  position: absolute;
+  top: 21px;
+  right: 100%;
+  font-size: 16px;
+  transform: translateY(-50%) scaleX(0);
+  transform-origin: right center;
+  width: 6em;
+  height: 24px;
+  background: white;
+  border-radius: 0.5em;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  z-index: 200;
+}
+.search-box input {
+  width: 100%;
+  height: 100%;
+  padding: 0.5em;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+.search-box.active {
+  transform: translateY(-50%) scaleX(1);
+}
+
+/* =============================== */
+/* 🛒 КОРЗИНА */
+/* =============================== */
+.cart-sidebar {
+  position: fixed;
+  top: 60px;
+  right: -700px;
+  width: 320px;
+  height: 400px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+  transition: right 0.4s ease;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+}
+.cart-sidebar.active {
+  right: 0;
+}
+
+/* 🔹 Заголовок корзини */
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+.cart-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+.cart-header button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.cart-header button:hover {
+  transform: scale(1.2);
+}
+
+/* 🔹 Контент корзини */
+.cart-content {
+  padding: 15px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* 🔹 Кнопка оформлення */
+#checkout-btn {
+  display: block;
+  width: 90%;
+  max-width: 310px;
+  margin: 15px auto;
+  padding: 10px;
+  background-color: #009956;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+#checkout-btn:hover {
+  background-color: #45a049;
+}
+#checkout-btn:active {
+  transform: scale(0.97);
+}
+
+/* =============================== */
+/* 🛍️ КАТАЛОГ ТОВАРІВ */
+/* =============================== */
+.catalog-title {
+  grid-column: 1/-1;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 24px;
+  color: #222;
+  text-align: center;
+}
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: 24px;
+  padding: 40px 0;
+  max-width: 1000px;
+  margin: auto;
+  margin-top: 100px;
+}
+.product-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.274);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+}
+.product-card img {
+  max-width: 120px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+.product-img {
+  background: #f2f4f3;
+  color: #aaa;
+  text-align: center;
+  /* padding: 48px 0 32px 0; */
+  font-size: 1.1rem;
+  flex: 1 0 120px;
+}
+.product-info {
+  padding: 16px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.product-weight {
+  color: #888;
+  font-size: 0.95rem;
+}
+.product-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+.product-price {
+  color: #009956;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.add-btn {
+  background: #009956;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+.add-btn:hover {
+  background: #007a43;
+}
+
+/* =============================== */
+/* ⚓️ ФУТЕР */
+/* =============================== */
+footer {
+  width: 100%;
+  background: #fafbfb;
+  border-top: 1px solid #eee;
+  padding-top: 48px 0 0 0;
+  margin-top: 60px;
+}
+.footer-content {
+  transform: scale(0.8);
+  transform-origin: top center;
+  display: flex;
+  justify-content: space-between;
+  max-width: 1600px;
+  margin: 0 auto;
+  gap: 40px;
+  padding: 0 40px;
+}
+.footer-logo {
+  flex: 1 1 300px;
+  display: flex;
+  padding-top: 22px;
+  flex-direction: column;
+  gap: 12px;
+}
+.footer-logo img {
+  width: 32px;
+  height: 32px;
+}
+.footer-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #009956;
+}
+.footer-social {
+  display: flex;
+  gap: 16px;
+}
+.footer-social img {
+  width: 22px;
+  height: 22px;
+}
+.footer-nav,
+.footer-contacts {
+  padding-top: 22px;
+  flex: 1 1 200px;
+}
+.footer-nav b,
+.footer-contacts b {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  display: block;
+}
+.footer-nav ul,
+.footer-contacts ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.footer-nav li,
+.footer-contacts li {
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 1rem;
+}
+.footer-nav a {
+  color: #222;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-nav a:hover {
+  color: #009956;
+}
+.footer-bottom {
+  text-align: center;
+  color: #888;
+  font-size: 0.8rem;
+  padding-bottom: 16px;
+  border-top: 1px solid #eee;
+}
+
+/* =============================== */
+/* 📱 АДАПТИВНІСТЬ/МАШТАБУВАННЯ */
+/* =============================== */
+
+/* Планшети */
+@media (max-width: 1024px) {
+  .hero {
+    background-size: 350px auto;
+    padding: 100px 40px;
+  }
+  .buttons {
+    gap: 30px;
+  }
+  button.halo {
+    width: 260px;
+  }
+  .catalog {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Телефони */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 20px;
+  }
+
+  .burger {
+    display: flex;
+  }
+
+  .nav-center {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: absolute;
+    top: 115px;
+    left: 0;
+    width: 100%;
+    background: white;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: scaleY(0.9);
+    transform-origin: top;
+    transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .nav-center.active {
+    padding: 15px 0;
+    max-height: 500px;
+    opacity: 1;
+    transform: scaleY(1);
+  }
+
+  .hero {
+    background: none;
+    padding: 80px 20px;
+  }
+
+  .hero h1 {
+    font-size: clamp(20px, 6vw, 32px);
+  }
+
+  .icons {
+    margin-left: auto;
+  }
+
+  .catalog {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .product-card {
+    min-height: 280px;
+    margin-top: 10px;
+  }
+
+  .product-bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .add-btn {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    border-radius: 6px;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .product-price {
+    font-size: 0.8rem;
+  }
+
+  .product-name {
+    font-size: 0.8rem;
+  }
+
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto;
+    gap: 10px;
+    justify-items: center;
+    margin-top: 80px;
+  }
+
+  .halo:nth-child(1),
+  .halo:nth-child(2) {
+    width: 100%;
+    max-width: 300px;
+    height: 20px;
+  }
+
+  .halo:nth-child(3) {
+    grid-column: 1 / 3;
+    width: 100%;
+    max-width: 500px;
+    height: 20px;
+  }
+
+  .register-box {
+    width: 95%;
+    margin-top: 150px;
+    margin-bottom: 150px;
+    padding: 20px 15px;
+    box-shadow: none;
+    background: #fff;
+    border-radius: 12px;
+  }
+
+  .register-section {
+    height: auto;
+    padding: 40px 20px;
+  }
+
+  .register-box form {
+    gap: 10px;
+  }
+
+  .register-box form input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .register-button {
+    font-size: 14px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 6px;
+  }
+
+  .links {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  .register-section {
+    padding: 20px;
+  }
+
+  .register-box {
+    padding: 20px 15px;
+    box-shadow: none;
+  }
+
+  .register-box input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .register-button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .links {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+  .cart-sidebar {
+    width: 90%;
+    height: 450px;
+  }
+  .account-page {
+    flex-direction: column;
+    max-width: 100vw;
+    padding: 0px;
+    gap: 0px !important;
+    background: #fff;
+  }
+
+  .account-sidebar img {
+    width: 22px;
+    height: 22px;
+    margin-bottom: 2px;
+  }
+  .account-sidebar {
+    padding: 0px !important;
+  }
+
+  .account-content {
+    padding: 16px 8px;
+    width: 100%;
+  }
+  .account-content h1 {
+    font-size: 1.3rem;
+    margin-bottom: 18px;
+    text-align: center;
+  }
+  .account-card {
+    gap: 8px;
+  }
+  .account-item {
+    flex-direction: center;
+    /* align-items: flex-start; */
+    padding: 12px 10px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    height: 1p;
+    width: 85%;
+    margin-bottom: 8px;
+  }
+  .item-info {
+    gap: 8px;
+    font-size: 0.95rem;
+  }
+  .item-info img {
+    width: 18px;
+    height: 18px;
+  }
+  .edit-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 15px;
+    margin-top: 6px;
+  }
+
+  /* Prevent mobile zoom-caused overflow and extra horizontal scroll */
+  body {
+    zoom: 1; /* undo global zoom on small screens */
+    overflow-x: hidden; /* extra safety */
+  }
+
+  /* Ensure account page respects padding when calculating width */
+  .account-page {
+    box-sizing: border-box;
+  }
+
+  /* Center main content and limit its width */
+  .account-content {
+    max-width: 760px;
+    width: min(96%, 760px);
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  /* Center each account item and avoid touching the edges */
+  .account-item {
+    width: min(96%, 600px);
+    margin: 0 auto 8px auto; /* center horizontally, keep bottom gap */
+    box-sizing: border-box;
+  }
+
+  /* If header or nav cause small overflow, ensure they don't push layout */
+  header,
+  .nav-center {
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
+  }
+}
+
+/* =============================== */
+/* 🧾 СТОРІНКА РЕЄСТРАЦІЇ */
+/* =============================== */
+.body-registration {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+main {
+  flex: 1;
+}
+.register-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 700px;
+}
+.register-box {
+  width: 360px;
+  background: #fff;
+  text-align: center;
+}
+.register-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: border 0.2s;
+}
+input:focus {
+  border-color: #009956;
+}
+.register-button {
+  background: #009956;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.links {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+.links a {
+  color: #000;
+  text-decoration: none;
+}
+.links a:hover {
+  color: #009956;
+}
+
+/* =============================== */
+/* 👤 ОСОБИСТИЙ КАБІНЕТ (USER PAGE) */
+/* =============================== */
+
+.account-page {
+  display: flex;
+  justify-content: center;
+  max-width: 1100px;
+  /* center horizontally and stay responsive */
+  width: min(1100px, 96%);
+  margin: 40px auto;
+  /* ensure content is not hidden by fixed header */
+  padding-top: 80px;
+  padding: 20px;
+  gap: 40px;
+  background: #fff;
+}
+
+.account-sidebar {
+  /* width: 200px; */
+  /* border-right: 1px solid #e0e0e0; */
+  border-radius: 12px;
+  padding: 20px 0;
+}
+.account-sidebar ul {
+  list-style: none;
+  margin-top: 100px;
+  padding: 0;
+  margin: 0;
+}
+.account-sidebar ul {
+  margin-top: 58px;
+}
+
+.account-sidebar li {
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  cursor: pointer;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+.account-sidebar li:hover {
+  background: #e8f7ed;
+  color: #009956;
+}
+.account-sidebar li.active {
+  background: #e0f5ea;
+  color: #009956;
+  font-weight: 500;
+}
+.account-sidebar img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+/* 🔹 Контент профілю */
+.account-content {
+  flex: 1;
+  background: #fff;
+}
+.account-content h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+.account-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.account-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 14px 20px;
+  transition: background 0.2s;
+  background: #fff;
+}
+.account-item:hover {
+  background: #f9f9f9;
+}
+.item-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.item-info img {
+  width: 22px;
+  height: 22px;
+  opacity: 0.85;
+}
+.item-info strong {
+  display: block;
+  font-size: 1rem;
+  color: #111;
+}
+.item-info p {
+  margin: 2px 0 0 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* ✏️ Кнопки редагування */
+.edit-btn {
+  border: none;
+  background: #f2f2f2;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  padding: 0;
+}
+.edit-btn:hover {
+  background: #dff4e9;
+}
+.edit-btn img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+.edit-btn::before {
+  font-size: 16px;
+  color: #333;
+  display: inline-block;
+}
+.edit-btn img {
+  display: none;
+}
+.edit-btn img[src] {
+  display: inline-block;
+}
+
+/* Прихований елемент */
+.hidden {
+  display: none;
+}
+
+.halo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 700;
+  width: min(90%, 310px);
+  min-height: 120px;
+  background: white;
+  border: 2px solid #009956;
+  border-radius: 30px;
+  padding: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+.halo:hover {
+  background: #eaeaea;
+  transform: translateY(-3px);
+}
+.halo:active {
+  transform: translateY(0);
+}
+.halo .btn-img,
+button.halo {
+  margin-bottom: 8px;
+  object-fit: contain;
+}
+.btn-img {
+  width: 60px;
+  height: 60px;
+}
+.halo:focus {
+  /* outline: 3px solid rgba(0, 153, 86, 0.15); */
+  outline-offset: 2px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f9f9f9;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.cart-item img {
+  border-radius: 6px;
+}
+
+.cart-item-info {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.remove-item {
+  border: none;
+  background: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #555;
+}
+
+.remove-item:hover {
+  color: rgb(0, 0, 0);
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
+
+.cart-item-info {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.cart-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.qty-btn {
+  background: #009956;
+  color: white;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.qty-btn:hover {
+  background: #007a43;
+}
+
+.remove-item {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #888;
+  cursor: pointer;
+}
+
+.remove-item:hover {
+  color: #e74c3c;
+}
+
+.cart-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-top: 1px solid #eee;
+  color: #222;
+}
+.hidden {
+  display: none;
+}
+
+.account-sidebar li.active {
+  background-color: #e0f5ea;
+  color: #009956;
+  font-weight: 600;
+}
+
+.google-login {
+  /* margin-top: 20px; */
+  text-align: center;
+}
+
+#google-login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #fff;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  padding: 10px 18px;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  font-size: 15px;
+  font-weight: 500;
+  color: #444;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+#google-login-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+#google-login-btn:hover {
+  background-color: #f8f8f8;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+#google-login-btn:active {
+  transform: scale(0.97);
+}
+
+/* Modal (edit field) */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+  padding: 20px;
+}
+.modal.hidden {
+  display: none;
+}
+.modal-content {
+  width: min(520px, calc(100% - 32px));
+  max-width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+}
+.modal-close {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+#modal-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+#modal-input {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: block;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+}
+#modal-input:focus {
+  border-color: #009956;
+}
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 6px;
+}
+.btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn-secondary {
+  background: #f3f3f3;
+  color: #333;
+}
+.btn-primary {
+  background: #009956;
+  color: #fff;
+}
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* small screens */
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 14px;
+  }
+  #modal-title {
+    font-size: 1rem;
+  }
+  #modal-input {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Modal fixes: prevent input overflowing modal */
+.modal {
+  padding: 12px; /* трохи зменшити зовнішній відступ */
+}
+.modal-content {
+  /* ensure padding is included in width and modal never exceeds viewport */
+  box-sizing: border-box;
+  width: min(520px, calc(100% - 32px));
+  max-width: 100%;
+}
+
+/* make sure all children inside modal use border-box (prevents input overflow) */
+.modal-content,
+.modal-content * {
+  box-sizing: border-box;
+}
+
+/* input should never grow beyond modal */
+#modal-input {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: block;
+}
+
+/* if modal buttons take too much space on very small screens, wrap them */
+@media (max-width: 360px) {
+  .modal-content {
+    padding: 12px;
+  }
+  .modal-buttons {
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+  .modal-buttons .btn {
+    width: 100%;
+    max-width: 220px;
+  }
+}
+
+/* reuse modal input styles for password inputs */
+.modal-input {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: block;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+}
+.modal-input:focus {
+  border-color: #009956;
+}
+
+/* spacing between stacked password inputs */
+#modal-row-password .modal-input {
+  margin-top: 8px;
+}
+
+/* Floating "Forgot password?" link bottom-left */
+.forgot-floating {
+  position: fixed;
+  left: 12px;
+  bottom: 12px;
+  z-index: 1200;
+  background: rgba(255, 255, 255, 0.98);
+  color: #009956;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  display: inline-block;
+}
+.forgot-floating:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+  background: #fff;
+}
+
+/* make sure it doesn't overlap important UI on very small screens */
+@media (max-width: 420px) {
+  .forgot-floating {
+    left: 8px;
+    bottom: 8px;
+    padding: 7px 10px;
+    font-size: 0.9rem;
+  }
+}
+
+/* optional: hide on pages where it's not needed (if you add a specific body class) */
+/* body.no-forgot .forgot-floating { display: none; } */
+
+/* hide old floating variant (keeps backward-safe) */
+.forgot-floating {
+  display: none;
+}
+
+/* link inside modal, left-aligned above buttons */
+.modal-forgot {
+  display: none; /* hidden by default */
+}
+
+/* show the link only when the password inputs row is visible */
+#modal-row-password:not(.hidden) + .modal-forgot {
+  display: inline-block;
+  color: #009956;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-top: 8px;
+  margin-bottom: 6px;
+  align-self: flex-start; /* place to the left inside modal-content (which is flex column) */
+}
+.modal-forgot:hover {
+  text-decoration: underline;
+  color: #007a43;
+}
+
+/* About / Team section */
+.team-section {
+  padding: 36px 16px 56px;
+  text-align: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.team-section h1 {
+  font-size: clamp(28px, 6vw, 48px);
+  font-weight: 800;
+  margin: 40px 0 18px;
+  line-height: 1.05;
+}
+.team-section .emoji {
+  margin-left: 8px;
+  font-size: 0.85em;
+  vertical-align: middle;
+}
+
+/* image container */
+.team-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+}
+.team-image img {
+  width: min(760px, 80%);
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  display: block;
+}
+
+/* smaller screens */
+@media (max-width: 480px) {
+  .team-section {
+    padding: 24px 12px 36px;
+  }
+  .team-section h1 {
+    font-size: clamp(22px, 8vw, 32px);
+  }
+  .team-image img {
+    width: 92%;
+  }
+}

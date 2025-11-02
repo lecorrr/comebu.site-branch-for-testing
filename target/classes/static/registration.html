@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Реєстрація | Come by</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="body-registration">
+    <header>
+      <a class="logo" href="/main.html" aria-label="Повернутись на головну">
+        <img src="images/shop-icon.png" class="logo-img" alt="logo" />
+        Come by
+      </a>
+
+      <nav class="nav-center" id="nav">
+        <a href="/main.html">Головна</a>
+        <a href="/menu.html">Меню</a>
+        <a href="/shop.html">Магазин</a>
+        <a href="/combo.html">Комбо</a>
+        <a href="/about-us.html">Про нас</a>
+      </nav>
+
+      <div class="icons">
+        <div class="search-icon" id="search-btn">
+          <img src="images/search.png" width="24" alt="search" />
+          <div class="search-box" id="search-box" aria-hidden="true">
+            <input id="search-input" type="text" placeholder="Пошук..." />
+          </div>
+        </div>
+
+        <div class="icons-shopping">
+          <img src="images/shopping-cart.png" width="24" alt="cart" />
+        </div>
+
+        <div class="icons-user">
+          <a href="/registration.html">
+            <img src="images/user.png" width="24" alt="user" />
+          </a>
+        </div>
+
+        <div class="burger" id="burger">
+          <img src="images/burger-icon.png" width="24" alt="menu" />
+        </div>
+      </div>
+    </header>
+
+    <main class="register-section">
+      <div class="register-box">
+        <form id="registerForm">
+          <input
+            type="email"
+            id="email"
+            placeholder="Адреса електронної пошти"
+            required
+          />
+          <input type="password" id="password" placeholder="Пароль" required />
+          <button class="register-button" type="submit">Зареєструватися</button>
+          <div class="google-login">
+            <button id="google-login-btn" type="button">
+              <img src="images/google-icon.png" alt="Google" />
+              Увійти через Google
+            </button>
+          </div>
+        </form>
+
+        <div class="links">
+          <a href="#">Забули пароль?</a>
+          <a href="login.html">Вхід</a>
+        </div>
+        <!-- --------------------------------------------------------------------прибрати-------------------------------------------------------------------- -->
+        <div class="links">
+          <a href="user.html">Особистий кабінет(тимчасово)</a>
+        </div>
+        <!-- --------------------------------------------------------------------прибрати-------------------------------------------------------------------- -->
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-logo">
+          <img src="images/shop-icon.png" width="32" alt="logo" />
+          <span class="footer-brand">Come by</span>
+          <p>
+            Найкращі продукти та страви з доставкою до дверей. Замовляйте онлайн
+            та насолоджуйтесь якістю.
+          </p>
+          <div class="footer-social">
+            <a href="#"><img src="images/instagram.png" alt="instagram" /></a>
+          </div>
+        </div>
+
+        <div class="footer-contacts">
+          <b>Контакти</b>
+          <ul>
+            <li>Телефон: redmi realmi a poco 8 pro</li>
+            <li>Email: їбать вас не повинно</li>
+            <li>Адреса: вул. Пушкіна до колотушкіна</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">© 2025 Come by. Всі права захищено.</div>
+    </footer>
+
+    <div class="cart-sidebar" id="cart-sidebar" aria-hidden="true">
+      <div class="cart-header">
+        <h2>Моя корзина</h2>
+        <button id="close-cart">&times;</button>
+      </div>
+
+      <div class="cart-content">
+        <p>Ваша корзина поки що пуста</p>
+      </div>
+
+      <div class="cart-footer">
+        <button id="checkout-btn">Оформити замовлення</button>
+      </div>
+    </div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
