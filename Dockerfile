@@ -1,15 +1,24 @@
 # ---- Build stage ----
 FROM maven:3.9-eclipse-temurin-17 AS build
 WORKDIR /app
+
+# Copy pom and sources
 COPY pom.xml .
 COPY src ./src
-RUN mvn -DskipTests package
+
+# Build without tests to speed up
+RUN mvn -B -DskipTests clean package
 
 # ---- Run stage ----
 FROM eclipse-temurin:17-jre
 WORKDIR /app
-ENV TZ=Europe/Kyiv       JAVA_OPTS=""
-COPY --from=build /app/target/*.jar /app/app.jar
-EXPOSE 8090
-# Spring Boot will pick up env vars for DB automatically from docker-compose
-ENTRYPOINT ["/bin/sh","-c","exec java $JAVA_OPTS -jar /app/app.jar"]
+
+# Copy the built jar
+COPY --from=build /app/target/*.jar app.jar
+
+# Heroku sets PORT; just pass it to Spring via server.port
+ENV JAVA_OPTS="-Xms256m -Xmx512m"
+
+EXPOSE 8080
+
+CMD ["sh", "-c", "java $JAVA_OPTS -Dserver.port=${PORT:-8080} -jar app.jar"]
