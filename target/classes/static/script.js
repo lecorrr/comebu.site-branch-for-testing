@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeCart = document.getElementById("close-cart");
   const checkoutBtn = document.getElementById("checkout-btn");
 
+  // load saved cart from localStorage (persist between pages)
   let cartItems = loadCart();
 
   if (cartBtn && cartSidebar) {
@@ -79,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // save cart to localStorage
   function saveCart() {
     try {
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -87,6 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // load cart from localStorage
   function loadCart() {
     try {
       const raw = localStorage.getItem("cartItems");
@@ -113,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCart();
   }
 
+  // зробити доступною глобально для динамічно згенерованих карток
   window.addToCart = addToCart;
 
   function updateQuantity(name, change) {
@@ -212,8 +216,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // render cart initially from loaded state
   renderCart();
 
+  /* ---------- Edit-field modal logic ---------- */
   const modal = document.getElementById("edit-modal");
   const modalTitle = document.getElementById("modal-title");
   const modalInput = document.getElementById("modal-input");
@@ -229,6 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentTargetItem = null;
   let currentField = null;
 
+  // Open modal with context from clicked edit button
   document.querySelectorAll(".edit-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       const field = btn.dataset.field || "field";
@@ -276,7 +283,6 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.classList.remove("hidden");
     modal.setAttribute("aria-hidden", "false");
   }
-
   function closeModal() {
     if (!modal) return;
     modal.classList.add("hidden");
@@ -294,7 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const oldVal = modalOld?.value.trim();
         const newVal = modalNew?.value.trim();
         const conf = modalConfirm?.value.trim();
-
+        // basic validation
         if (!oldVal || !newVal || !conf) {
           if (modalError) {
             modalError.textContent = "Всі поля пароля повинні бути заповнені.";
@@ -310,7 +316,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           return;
         }
-
+        // success: show masked password
         if (infoDiv) {
           let p = infoDiv.querySelector("p");
           if (!p) {
@@ -319,7 +325,6 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           p.textContent = "••••••••";
         }
-
         closeModal();
       } else {
         const newVal = modalInput?.value.trim();
@@ -355,16 +360,66 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "Escape") closeModal();
   });
 
+  // === ДИНАМІЧНЕ ЗАВАНТАЖЕННЯ ТОВАРІВ З БЕКЕНДУ + АНІМАЦІЯ ЗАВАНТАЖЕННЯ ===
   const catalogEl = document.getElementById("catalog");
+  let loadingAnimation = null;
+  let loadingEl = null;
+
+  function startLoadingAnimation() {
+    if (!catalogEl) return;
+
+    // if (!loadingEl) {
+    //   loadingEl = document.createElement("div");
+    //   loadingEl.id = "loading-animation";
+    //   loadingEl.className = "loading";
+    //   loadingEl.innerHTML = `
+    //     <div class="circle"></div>
+    //     <div class="circle"></div>
+    //     <div class="circle"></div>
+    //     <div class="circle"></div>
+    //     <div class="circle"></div>
+    //   `;
+    //   if (catalogEl.parentNode) {
+    //     catalogEl.parentNode.insertBefore(loadingEl, catalogEl);
+    //   }
+    // }
+
+    if (window.anime && !loadingAnimation) {
+      const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+      loadingAnimation = window.anime({
+        targets: "#loading-animation .circle",
+        scale: [
+          { value: 1, duration: 0 },
+          { value: 1.6, duration: 400 },
+          { value: 1, duration: 400 },
+        ],
+        delay: window.anime.stagger(150),
+        easing: "easeInOutQuad",
+        loop: true,
+      });
+    }
+  }
+
+  function stopLoadingAnimation() {
+    if (loadingAnimation) {
+      loadingAnimation.pause();
+      loadingAnimation = null;
+    }
+    if (loadingEl && loadingEl.parentNode) {
+      loadingEl.parentNode.removeChild(loadingEl);
+      loadingEl = null;
+    }
+  }
+
   if (catalogEl) {
     loadProducts();
   }
 
   async function loadProducts() {
-    const API_URL = "http://localhost:3000/api/products";
+    const API_URL = "http://localhost:3000/api/products"; // ← твій бекенд
 
-    catalogEl.innerHTML =
-      '<p style="text-align:center;opacity:.7">Завантаження товарів…</p>';
+    startLoadingAnimation();
+    catalogEl.innerHTML = "";
 
     try {
       const res = await fetch(API_URL, {
@@ -375,12 +430,15 @@ document.addEventListener("DOMContentLoaded", () => {
       renderProducts(products);
     } catch (err) {
       console.error("Помилка завантаження продуктів:", err);
+      stopLoadingAnimation();
       catalogEl.innerHTML =
-        '<p style="text-align:center;color:#c0392b">Не вдалося завантажити товари</p>';
+        '<p class="error-wrap">Не вдалося завантажити товари</p>';
     }
   }
 
   function renderProducts(products) {
+    stopLoadingAnimation();
+
     if (!Array.isArray(products) || products.length === 0) {
       catalogEl.innerHTML =
         '<p style="text-align:center;opacity:.7">Товарів поки немає</p>';
@@ -416,6 +474,7 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .join("");
 
+    // Делегування кліків: працює і для щойно згенерованих кнопок
     catalogEl.addEventListener("click", (e) => {
       const btn = e.target.closest(".add-btn");
       if (!btn) return;
@@ -443,6 +502,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// 🔎 Пошук по товарах (актуальні картки, навіть динамічні)
 const searchInputShop = document.getElementById("search-input");
 const catalog = document.querySelector(".catalog");
 
