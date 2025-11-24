@@ -1,18 +1,6 @@
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\entity\Order.java
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\util\TokenService.java
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\entity\User.java
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\controller\CartController.java
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\service\AuthService.java
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\controller\OrderController.java
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\repository\ProductRepository.java
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\config\DataInitializer.java
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\controller\AuthController.java
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\controller\ProductController.java
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\entity\OrderItem.java
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\repository\CartItemRepository.java
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\repository\OrderRepository.java
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\entity\Product.java
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\InternetShopApplication.java
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\repository\UserRepository.java
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\service\OrderService.java
-C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\entity\CartItem.java
+/home/lecor/comeby remake/src/main/java/com/example/shop/entity/User.java
+/home/lecor/comeby remake/src/main/java/com/example/shop/InternetShopApplication.java
+/home/lecor/comeby remake/src/main/java/com/example/shop/controller/AuthController.java
+/home/lecor/comeby remake/src/main/java/com/example/shop/repository/UserRepository.java
+/home/lecor/comeby remake/src/main/java/com/example/shop/service/AuthService.java
+/home/lecor/comeby remake/src/main/java/com/example/shop/util/TokenService.java

@@ -1388,3 +1388,12 @@ button.halo {
     padding: 12px 8px;
   }
 }
+
+
+.admin-only {
+  display: none;
+}
+
+body.admin-user .admin-only {
+  display: block;
+}
