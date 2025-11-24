@@ -241,7 +241,7 @@ button.halo:hover {
   transform: scale(1.2);
 }
 
-/ .cart-content {
+.cart-content {
   padding: 15px;
   flex: 1;
   overflow-y: auto;
