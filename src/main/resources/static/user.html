@@ -252,7 +252,16 @@
             type="password"
             placeholder="Повторіть новий пароль"
           />
-          <p id="modal-error" aria-live="assertive" class="modal-error"></p>
+          <div
+            id="modal-error"
+            aria-live="assertive"
+            style="
+              color: #c0392b;
+              font-size: 0.95rem;
+              display: none;
+              margin-top: 6px;
+            "
+          ></div>
         </div>
 
         <a
@@ -260,9 +269,8 @@
           class="modal-forgot"
           href="login.html"
           aria-label="Забули пароль?"
+          >Забули пароль?</a
         >
-          Забули пароль?
-        </a>
 
         <div class="modal-buttons">
           <button id="modal-cancel" class="btn btn-secondary" type="button">

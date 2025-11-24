@@ -12,13 +12,6 @@ body {
   zoom: 1.4;
 }
 
-/* Fix: prevent horizontal overflow and ensure padding is included in width */
-/* *,
-*::before,
-*::after {
-  box-sizing: border-box;
-} */
-
 /* =============================== */
 /* 🧭 ХЕДЕР (верхня частина сайту) */
 /* =============================== */
@@ -38,7 +31,6 @@ header {
   z-index: 100;
 }
 
-/* 🔹 Логотип */
 .logo {
   font-weight: 800;
   color: #009956;
@@ -165,7 +157,6 @@ button.halo:hover {
   background: #d8d8d8;
 }
 
-/* 🍔 Бургер-меню */
 .burger {
   display: none;
   font-size: 26px;
@@ -229,7 +220,6 @@ button.halo:hover {
   right: 0;
 }
 
-/* 🔹 Заголовок корзини */
 .cart-header {
   display: flex;
   justify-content: space-between;
@@ -251,14 +241,12 @@ button.halo:hover {
   transform: scale(1.2);
 }
 
-/* 🔹 Контент корзини */
 .cart-content {
   padding: 15px;
   flex: 1;
   overflow-y: auto;
 }
 
-/* 🔹 Кнопка оформлення */
 #checkout-btn {
   display: block;
   width: 90%;
@@ -319,7 +307,7 @@ button.halo:hover {
   background: #f2f4f3;
   color: #aaa;
   text-align: center;
-  /* padding: 48px 0 32px 0; */
+
   font-size: 1.1rem;
   flex: 1 0 120px;
 }
@@ -449,7 +437,6 @@ footer {
 /* 📱 АДАПТИВНІСТЬ/МАШТАБУВАННЯ */
 /* =============================== */
 
-/* Планшети */
 @media (max-width: 1024px) {
   .hero {
     background-size: 350px auto;
@@ -466,7 +453,6 @@ footer {
   }
 }
 
-/* Телефони */
 @media (max-width: 768px) {
   header {
     flex-direction: column;
@@ -692,18 +678,15 @@ footer {
     margin-top: 6px;
   }
 
-  /* Prevent mobile zoom-caused overflow and extra horizontal scroll */
   body {
-    zoom: 1; /* undo global zoom on small screens */
-    overflow-x: hidden; /* extra safety */
+    zoom: 1;
+    overflow-x: hidden;
   }
 
-  /* Ensure account page respects padding when calculating width */
   .account-page {
     box-sizing: border-box;
   }
 
-  /* Center main content and limit its width */
   .account-content {
     max-width: 760px;
     width: min(96%, 760px);
@@ -713,14 +696,12 @@ footer {
     padding-right: 6px;
   }
 
-  /* Center each account item and avoid touching the edges */
   .account-item {
     width: min(96%, 600px);
-    margin: 0 auto 8px auto; /* center horizontally, keep bottom gap */
+    margin: 0 auto 8px auto;
     box-sizing: border-box;
   }
 
-  /* If header or nav cause small overflow, ensure they don't push layout */
   header,
   .nav-center {
     left: 0;
@@ -802,10 +783,10 @@ input:focus {
   display: flex;
   justify-content: center;
   max-width: 1100px;
-  /* center horizontally and stay responsive */
+
   width: min(1100px, 96%);
   margin: 40px auto;
-  /* ensure content is not hidden by fixed header */
+
   padding-top: 80px;
   padding: 20px;
   gap: 40px;
@@ -855,7 +836,6 @@ input:focus {
   object-fit: contain;
 }
 
-/* 🔹 Контент профілю */
 .account-content {
   flex: 1;
   background: #fff;
@@ -904,7 +884,6 @@ input:focus {
   font-size: 0.9rem;
 }
 
-/* ✏️ Кнопки редагування */
 .edit-btn {
   border: none;
   background: #f2f2f2;
@@ -938,7 +917,6 @@ input:focus {
   display: inline-block;
 }
 
-/* Прихований елемент */
 .hidden {
   display: none;
 }
@@ -1120,7 +1098,6 @@ button.halo {
   transform: scale(0.97);
 }
 
-/* Modal (edit field) */
 .modal {
   position: fixed;
   inset: 0;
@@ -1200,7 +1177,6 @@ button.halo {
   transform: scale(0.98);
 }
 
-/* small screens */
 @media (max-width: 480px) {
   .modal-content {
     padding: 14px;
@@ -1214,24 +1190,20 @@ button.halo {
   }
 }
 
-/* Modal fixes: prevent input overflowing modal */
 .modal {
-  padding: 12px; /* трохи зменшити зовнішній відступ */
+  padding: 12px;
 }
 .modal-content {
-  /* ensure padding is included in width and modal never exceeds viewport */
   box-sizing: border-box;
   width: min(520px, calc(100% - 32px));
   max-width: 100%;
 }
 
-/* make sure all children inside modal use border-box (prevents input overflow) */
 .modal-content,
 .modal-content * {
   box-sizing: border-box;
 }
 
-/* input should never grow beyond modal */
 #modal-input {
   width: 100%;
   max-width: 100%;
@@ -1239,7 +1211,6 @@ button.halo {
   display: block;
 }
 
-/* if modal buttons take too much space on very small screens, wrap them */
 @media (max-width: 360px) {
   .modal-content {
     padding: 12px;
@@ -1255,7 +1226,6 @@ button.halo {
   }
 }
 
-/* reuse modal input styles for password inputs */
 .modal-input {
   width: 100%;
   max-width: 100%;
@@ -1271,12 +1241,10 @@ button.halo {
   border-color: #009956;
 }
 
-/* spacing between stacked password inputs */
 #modal-row-password .modal-input {
   margin-top: 8px;
 }
 
-/* Floating "Forgot password?" link bottom-left */
 .forgot-floating {
   position: fixed;
   left: 12px;
@@ -1300,7 +1268,6 @@ button.halo {
   background: #fff;
 }
 
-/* make sure it doesn't overlap important UI on very small screens */
 @media (max-width: 420px) {
   .forgot-floating {
     left: 8px;
@@ -1310,20 +1277,14 @@ button.halo {
   }
 }
 
-/* optional: hide on pages where it's not needed (if you add a specific body class) */
-/* body.no-forgot .forgot-floating { display: none; } */
-
-/* hide old floating variant (keeps backward-safe) */
 .forgot-floating {
   display: none;
 }
 
-/* link inside modal, left-aligned above buttons */
 .modal-forgot {
-  display: none; /* hidden by default */
+  display: none;
 }
 
-/* show the link only when the password inputs row is visible */
 #modal-row-password:not(.hidden) + .modal-forgot {
   display: inline-block;
   color: #009956;
@@ -1332,14 +1293,13 @@ button.halo {
   font-size: 0.95rem;
   margin-top: 8px;
   margin-bottom: 6px;
-  align-self: flex-start; /* place to the left inside modal-content (which is flex column) */
+  align-self: flex-start;
 }
 .modal-forgot:hover {
   text-decoration: underline;
   color: #007a43;
 }
 
-/* About / Team section */
 .team-section {
   padding: 36px 16px 56px;
   text-align: center;
@@ -1358,7 +1318,6 @@ button.halo {
   vertical-align: middle;
 }
 
-/* image container */
 .team-image {
   display: flex;
   justify-content: center;
@@ -1374,7 +1333,6 @@ button.halo {
   display: block;
 }
 
-/* smaller screens */
 @media (max-width: 480px) {
   .team-section {
     padding: 24px 12px 36px;
@@ -1387,135 +1345,46 @@ button.halo {
   }
 }
 
-.modal {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+.loading {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 140px 0;
+}
+
+.circle {
+  width: 12px;
+  height: 12px;
+  background: #009956;
+  border-radius: 50%;
+}
+
+.error-wrap {
+  grid-column: 1 / -1; /* займати всі колонки каталогу */
+  justify-self: center;
+  align-self: center;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  transition: opacity 0.2s ease;
-}
 
-/* Приховано за замовчуванням */
-.modal.hidden {
-  display: none;
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Контент модалки */
-.modal-content {
-  background: #fff;
-  padding: 20px 24px;
-  border-radius: 12px;
   width: 100%;
-  max-width: 420px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  position: relative;
-  animation: fadeIn 0.25s ease;
-}
+  padding: 16px 8px;
+  margin: 0; /* не відокремлювати як панель */
 
-/* Кнопка закриття */
-.modal-close {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: #666;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.modal-close:hover {
-  color: #000;
-}
-
-/* Поля вводу */
-.modal-input {
-  display: block;
-  width: 100%;
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  /* прибрано виділення: фон, тінь, округлення */
+  background: transparent;
+  color: #555;
+  text-align: center;
+  border-radius: 0;
+  box-shadow: none;
+  box-sizing: border-box;
   font-size: 1rem;
-  outline: none;
-  transition: border-color 0.2s;
 }
 
-.modal-input:focus {
-  border-color: #009956;
-}
-
-/* Повідомлення про помилку */
-.modal-error {
-  color: #c0392b;
-  font-size: 0.9rem;
-  margin-top: 6px;
-  display: none;
-}
-
-.modal-error.active {
-  display: block;
-}
-
-/* Посилання “Забули пароль?” */
-.modal-forgot {
-  display: inline-block;
-  margin: 12px 0;
-  color: #009956;
-  font-size: 0.9rem;
-  text-decoration: none;
-}
-
-.modal-forgot:hover {
-  text-decoration: underline;
-}
-
-/* Кнопки */
-.modal-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.btn {
-  padding: 8px 14px;
-  border-radius: 6px;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background-color: #009956;
-  color: white;
-}
-
-.btn-secondary {
-  background-color: #bdc3c7;
-  color: #333;
-}
-
-.btn-primary:hover {
-  background-color: #007a43;
-}
-
-.btn-secondary:hover {
-  background-color: #95a5a6;
-}
-
-@keyframes fadeIn {
-  from {
-    transform: scale(0.95);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
+/* Невелика корекція для вузьких екранів */
+@media (max-width: 480px) {
+  .error-wrap {
+    padding: 12px 8px;
   }
 }

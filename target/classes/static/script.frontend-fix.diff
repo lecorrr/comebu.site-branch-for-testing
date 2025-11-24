@@ -1,0 +1,108 @@
+--- script.js (original)
++++ script.js (patched)
+@@ -23,7 +23,7 @@
+   }
+ 
+   if (burger && nav) {
+-    burger.addEventListener("click", () => {
++    burger && burger.addEventListener("click", () => {
+       nav.classList.toggle("active");
+     });
+   }
+@@ -33,7 +33,7 @@
+   const searchInput = document.getElementById("search-input");
+ 
+   if (searchBtn && searchBox) {
+-    searchBtn.addEventListener("click", (e) => {
++    searchBtn && searchBtn.addEventListener("click", (e) => {
+       e.stopPropagation();
+       searchBox.classList.toggle("active");
+       searchBox.setAttribute(
+@@ -69,12 +69,12 @@
+   let cartItems = loadCart();
+ 
+   if (cartBtn && cartSidebar) {
+-    cartBtn.addEventListener("click", () => {
++    cartBtn && cartBtn.addEventListener("click", () => {
+       cartSidebar.classList.toggle("active");
+     });
+   }
+   if (closeCart) {
+-    closeCart.addEventListener("click", () => {
++    closeCart && closeCart.addEventListener("click", () => {
+       cartSidebar.classList.remove("active");
+     });
+   }
+@@ -214,7 +214,7 @@
+   });
+ 
+   if (checkoutBtn) {
+-    checkoutBtn.addEventListener("click", () => {
++    checkoutBtn && checkoutBtn.addEventListener("click", () => {
+       if (cartItems.length === 0) {
+         alert("Ваша корзина порожня 😕");
+         return;
+@@ -295,7 +295,7 @@
+     modalError.style.display = "none";
+   }
+ 
+-  modalSave.addEventListener("click", () => {
++  modalSave && modalSave.addEventListener("click", () => {
+     if (!currentTargetItem || !currentField) return closeModal();
+     const infoDiv = currentTargetItem.querySelector(".item-info div");
+     if (currentField === "password") {
+@@ -348,13 +348,51 @@
+     });
+   });
+ 
+-  modal.addEventListener("click", (e) => {
++  modal && modal.addEventListener("click", (e) => {
+     if (e.target === modal) closeModal();
+   });
+ 
+   document.addEventListener("keydown", (e) => {
+-    if (e.key === "Escape") closeModal();
+-  });
++    if (e.key === "Escape" && typeof closeModal === "function") closeModal();
++  });
++});
++
++
++// ===== Auth forms (login & registration) =====
++document.addEventListener("DOMContentLoaded", () => {
++  const form = document.getElementById("registerForm");
++  const emailEl = document.getElementById("email");
++  const passEl = document.getElementById("password");
++
++  if (form && emailEl && passEl) {
++    const isLoginPage =
++      document.title.toLowerCase().includes("авторизація") ||
++      /login\.html$/.test(window.location.pathname);
++
++    form.addEventListener("submit", async (e) => {
++      e.preventDefault();
++      const email = emailEl.value.trim();
++      const password = passEl.value.trim();
++      const endpoint = isLoginPage ? "/api/auth/login" : "/api/auth/register";
++      try {
++        const res = await fetch(endpoint, {
++          method: "POST",
++          headers: { "Content-Type": "application/json" },
++          body: JSON.stringify({ email, password })
++        });
++        if (!res.ok) {
++          const err = await res.json().catch(() => ({}));
++          throw new Error(err.error || "Помилка авторизації/реєстрації");
++        }
++        const data = await res.json();
++        localStorage.setItem("token", data.token);
++        localStorage.setItem("user", JSON.stringify(data.user));
++        window.location.href = "/shop.html";
++      } catch (err) {
++        alert(err.message || "Сталася помилка. Спробуйте ще раз.");
++      }
++    });
++  }
+ });
+ 
+ const searchInputShop = document.getElementById("search-input");

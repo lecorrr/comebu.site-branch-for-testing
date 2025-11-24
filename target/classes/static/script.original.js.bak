@@ -66,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeCart = document.getElementById("close-cart");
   const checkoutBtn = document.getElementById("checkout-btn");
 
-  // load saved cart from localStorage (persist between pages)
   let cartItems = loadCart();
 
   if (cartBtn && cartSidebar) {
@@ -80,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // save cart to localStorage
   function saveCart() {
     try {
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -89,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // load cart from localStorage
   function loadCart() {
     try {
       const raw = localStorage.getItem("cartItems");
@@ -115,9 +112,6 @@ document.addEventListener("DOMContentLoaded", () => {
     saveCart();
     renderCart();
   }
-
-  // зробити доступною глобально для динамічно згенерованих карток
-  window.addToCart = addToCart;
 
   function updateQuantity(name, change) {
     const item = cartItems.find((i) => i.name === name);
@@ -157,32 +151,34 @@ document.addEventListener("DOMContentLoaded", () => {
     cartContent.innerHTML = cartItems
       .map(
         (item) => `
-        <div class="cart-item">
-          <img src="${item.image}" alt="${item.name}" width="45" height="45">
-          <div class="cart-item-info">
-            <strong>${item.name}</strong><br>
-            <span>${item.price.toFixed(2)} ₴ × ${item.quantity}</span>
-          </div>
-          <div class="cart-controls">
-            <button class="qty-btn" data-name="${
-              item.name
-            }" data-action="minus">−</button>
-            <button class="qty-btn" data-name="${
-              item.name
-            }" data-action="plus">+</button>
-            <button class="remove-item" data-name="${item.name}">✖</button>
-          </div>
+      <div class="cart-item">
+        <img src="${item.image}" alt="${item.name}" width="45" height="45">
+        <div class="cart-item-info">
+          <strong>${item.name}</strong><br>
+          <span>${item.price.toFixed(2)} ₴ × ${item.quantity}</span>
         </div>
-      `
+        <div class="cart-controls">
+          <button class="qty-btn" data-name="${
+            item.name
+          }" data-action="minus">−</button>
+          <button class="qty-btn" data-name="${
+            item.name
+          }" data-action="plus">+</button>
+          <button class="remove-item" data-name="${item.name}">✖</button>
+        </div>
+      </div>
+    `
       )
       .join("");
 
-    cartTotal.innerHTML = `
+    if (cartTotal) {
+      cartTotal.innerHTML = `
       <div class="cart-summary">
         <strong>Загальна сума:</strong>
         <span>${getTotalPrice()} ₴</span>
       </div>
     `;
+    }
 
     document.querySelectorAll(".qty-btn").forEach((btn) => {
       btn.addEventListener("click", (e) => {
@@ -203,6 +199,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  document.querySelectorAll(".add-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+      const card = button.closest(".product-card");
+      const name = card.querySelector("b, strong").textContent;
+      const price = card
+        .querySelector(".product-price")
+        .textContent.replace("₴", "")
+        .trim();
+      const img = card.querySelector(".product-img img");
+      const image = img ? img.src : "images/no-image.png";
+      addToCart(name, price, image);
+    });
+  });
+
   if (checkoutBtn) {
     checkoutBtn.addEventListener("click", () => {
       if (cartItems.length === 0) {
@@ -216,10 +226,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // render cart initially from loaded state
   renderCart();
 
-  /* ---------- Edit-field modal logic ---------- */
   const modal = document.getElementById("edit-modal");
   const modalTitle = document.getElementById("modal-title");
   const modalInput = document.getElementById("modal-input");
@@ -235,7 +243,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentTargetItem = null;
   let currentField = null;
 
-  // Open modal with context from clicked edit button
   document.querySelectorAll(".edit-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       const field = btn.dataset.field || "field";
@@ -243,9 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currentTargetItem = item;
       currentField = field;
 
-      if (modalError) {
-        modalError.style.display = "none";
-      }
+      modalError.style.display = "none";
 
       modalTitle.textContent =
         {
@@ -258,21 +263,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }[field] || "Редагувати";
 
       if (field === "password") {
-        modalRowSingle?.classList.add("hidden");
-        modalRowPassword?.classList.remove("hidden");
-        if (modalOld) modalOld.value = "";
-        if (modalNew) modalNew.value = "";
-        if (modalConfirm) modalConfirm.value = "";
-        modalOld?.focus();
+        modalRowSingle.classList.add("hidden");
+        modalRowPassword.classList.remove("hidden");
+        modalOld.value = "";
+        modalNew.value = "";
+        modalConfirm.value = "";
+        modalOld.focus();
       } else {
-        modalRowPassword?.classList.add("hidden");
-        modalRowSingle?.classList.remove("hidden");
+        modalRowPassword.classList.add("hidden");
+        modalRowSingle.classList.remove("hidden");
         const textNode = item.querySelector(".item-info div p");
-        if (modalInput) {
-          modalInput.type = "text";
-          modalInput.value = textNode ? textNode.textContent.trim() : "";
-          modalInput.focus();
-        }
+        modalInput.type = "text";
+        modalInput.value = textNode ? textNode.textContent.trim() : "";
+        modalInput.focus();
       }
       openModal();
     });
@@ -289,58 +292,53 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.setAttribute("aria-hidden", "true");
     currentTargetItem = null;
     currentField = null;
-    if (modalError) modalError.style.display = "none";
+    modalError.style.display = "none";
   }
 
-  if (modalSave) {
-    modalSave.addEventListener("click", () => {
-      if (!currentTargetItem || !currentField) return closeModal();
-      const infoDiv = currentTargetItem.querySelector(".item-info div");
-      if (currentField === "password") {
-        const oldVal = modalOld?.value.trim();
-        const newVal = modalNew?.value.trim();
-        const conf = modalConfirm?.value.trim();
-        // basic validation
-        if (!oldVal || !newVal || !conf) {
-          if (modalError) {
-            modalError.textContent = "Всі поля пароля повинні бути заповнені.";
-            modalError.style.display = "block";
-          }
-          return;
-        }
-        if (newVal !== conf) {
-          if (modalError) {
-            modalError.textContent =
-              "Новий пароль та підтвердження не співпадають.";
-            modalError.style.display = "block";
-          }
-          return;
-        }
-        // success: show masked password
-        if (infoDiv) {
-          let p = infoDiv.querySelector("p");
-          if (!p) {
-            p = document.createElement("p");
-            infoDiv.appendChild(p);
-          }
-          p.textContent = "••••••••";
-        }
-        closeModal();
-      } else {
-        const newVal = modalInput?.value.trim();
-        if (infoDiv) {
-          let p = infoDiv.querySelector("p");
-          if (!p) {
-            p = document.createElement("p");
-            infoDiv.appendChild(p);
-          }
-          p.textContent =
-            newVal || (currentField === "payment" ? "Не вказано" : "");
-        }
-        closeModal();
+  modalSave.addEventListener("click", () => {
+    if (!currentTargetItem || !currentField) return closeModal();
+    const infoDiv = currentTargetItem.querySelector(".item-info div");
+    if (currentField === "password") {
+      const oldVal = modalOld.value.trim();
+      const newVal = modalNew.value.trim();
+      const conf = modalConfirm.value.trim();
+
+      if (!oldVal || !newVal || !conf) {
+        modalError.textContent = "Всі поля пароля повинні бути заповнені.";
+        modalError.style.display = "block";
+        return;
       }
-    });
-  }
+      if (newVal !== conf) {
+        modalError.textContent =
+          "Новий пароль та підтвердження не співпадають.";
+        modalError.style.display = "block";
+        return;
+      }
+
+      if (infoDiv) {
+        let p = infoDiv.querySelector("p");
+        if (!p) {
+          p = document.createElement("p");
+          infoDiv.appendChild(p);
+        }
+        p.textContent = "••••••••";
+      }
+
+      closeModal();
+    } else {
+      const newVal = modalInput.value.trim();
+      if (infoDiv) {
+        let p = infoDiv.querySelector("p");
+        if (!p) {
+          p = document.createElement("p");
+          infoDiv.appendChild(p);
+        }
+        p.textContent =
+          newVal || (currentField === "payment" ? "Не вказано" : "");
+      }
+      closeModal();
+    }
+  });
 
   [modalCancel, modalClose].forEach((el) => {
     if (!el) return;
@@ -350,163 +348,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  if (modal) {
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) closeModal();
-    });
-  }
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeModal();
   });
-
-  // === ДИНАМІЧНЕ ЗАВАНТАЖЕННЯ ТОВАРІВ З БЕКЕНДУ + АНІМАЦІЯ ЗАВАНТАЖЕННЯ ===
-  const catalogEl = document.getElementById("catalog");
-  let loadingAnimation = null;
-  let loadingEl = null;
-
-  function startLoadingAnimation() {
-    if (!catalogEl) return;
-
-    // if (!loadingEl) {
-    //   loadingEl = document.createElement("div");
-    //   loadingEl.id = "loading-animation";
-    //   loadingEl.className = "loading";
-    //   loadingEl.innerHTML = `
-    //     <div class="circle"></div>
-    //     <div class="circle"></div>
-    //     <div class="circle"></div>
-    //     <div class="circle"></div>
-    //     <div class="circle"></div>
-    //   `;
-    //   if (catalogEl.parentNode) {
-    //     catalogEl.parentNode.insertBefore(loadingEl, catalogEl);
-    //   }
-    // }
-
-    if (window.anime && !loadingAnimation) {
-      const isPortrait = window.matchMedia("(orientation: portrait)").matches;
-      loadingAnimation = window.anime({
-        targets: "#loading-animation .circle",
-        scale: [
-          { value: 1, duration: 0 },
-          { value: 1.6, duration: 400 },
-          { value: 1, duration: 400 },
-        ],
-        delay: window.anime.stagger(150),
-        easing: "easeInOutQuad",
-        loop: true,
-      });
-    }
-  }
-
-  function stopLoadingAnimation() {
-    if (loadingAnimation) {
-      loadingAnimation.pause();
-      loadingAnimation = null;
-    }
-    if (loadingEl && loadingEl.parentNode) {
-      loadingEl.parentNode.removeChild(loadingEl);
-      loadingEl = null;
-    }
-  }
-
-  if (catalogEl) {
-    loadProducts();
-  }
-
-  async function loadProducts() {
-    const API_URL = "http://localhost:3000/api/products"; // ← твій бекенд
-
-    startLoadingAnimation();
-    catalogEl.innerHTML = "";
-
-    try {
-      const res = await fetch(API_URL, {
-        headers: { Accept: "application/json" },
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const products = await res.json();
-      renderProducts(products);
-    } catch (err) {
-      console.error("Помилка завантаження продуктів:", err);
-      stopLoadingAnimation();
-      catalogEl.innerHTML =
-        '<p class="error-wrap">Не вдалося завантажити товари</p>';
-    }
-  }
-
-  function renderProducts(products) {
-    stopLoadingAnimation();
-
-    if (!Array.isArray(products) || products.length === 0) {
-      catalogEl.innerHTML =
-        '<p style="text-align:center;opacity:.7">Товарів поки немає</p>';
-      return;
-    }
-
-    catalogEl.innerHTML = products
-      .map((p) => {
-        const name = escapeHtml(p.name ?? "Без назви");
-        const weight = escapeHtml(p.weight ?? "");
-        const price = Number(p.price ?? 0);
-        const image = p.image || "images/no-image.png";
-
-        return `
-      <div class="product-card">
-        <div class="product-img">
-          <img src="${image}" alt="${name}">
-        </div>
-        <div class="product-info">
-          <div>
-            <b>${name}</b>
-            <div class="product-weight">${weight}</div>
-          </div>
-          <div class="product-bottom">
-            <span class="product-price">${price.toFixed(2)} ₴</span>
-            <button class="add-btn" data-name="${name}" data-price="${price}" data-image="${image}">
-              <span>+</span> Додати
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-      })
-      .join("");
-
-    // Делегування кліків: працює і для щойно згенерованих кнопок
-    catalogEl.addEventListener("click", (e) => {
-      const btn = e.target.closest(".add-btn");
-      if (!btn) return;
-      const name = btn.dataset.name;
-      const price = btn.dataset.price;
-      const image = btn.dataset.image || "images/no-image.png";
-      if (typeof window.addToCart === "function") {
-        window.addToCart(name, price, image);
-      }
-    });
-  }
-
-  function escapeHtml(str) {
-    return String(str).replace(
-      /[&<>"']/g,
-      (s) =>
-        ({
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#39;",
-        }[s])
-    );
-  }
 });
 
-// 🔎 Пошук по товарах (актуальні картки, навіть динамічні)
 const searchInputShop = document.getElementById("search-input");
+const allProducts = document.querySelectorAll(".product-card");
 const catalog = document.querySelector(".catalog");
 
-if (searchInputShop && catalog) {
+if (searchInputShop && allProducts.length > 0) {
   const noResults = document.createElement("p");
   noResults.textContent = "Товарів не знайдено 😕";
   noResults.style.textAlign = "center";
@@ -518,11 +373,8 @@ if (searchInputShop && catalog) {
     const query = searchInputShop.value.toLowerCase().trim();
     let found = 0;
 
-    const cards = catalog.querySelectorAll(".product-card");
-
-    cards.forEach((card) => {
-      const titleEl = card.querySelector("b, strong");
-      const title = titleEl ? titleEl.textContent.toLowerCase() : "";
+    allProducts.forEach((card) => {
+      const title = card.querySelector("b, strong").textContent.toLowerCase();
       if (title.includes(query)) {
         card.style.display = "flex";
         found++;
@@ -537,8 +389,7 @@ if (searchInputShop && catalog) {
   searchInputShop.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       searchInputShop.value = "";
-      const cards = catalog.querySelectorAll(".product-card");
-      cards.forEach((card) => (card.style.display = "flex"));
+      allProducts.forEach((card) => (card.style.display = "flex"));
       noResults.style.display = "none";
     }
   });
