@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function addToCart(name, price, image) {
+  function addToCart(name, price, image, description) {
     const existingItem = cartItems.find((i) => i.name === name);
     if (existingItem) {
       existingItem.quantity++;
@@ -110,13 +110,13 @@ document.addEventListener("DOMContentLoaded", () => {
         price: parseFloat(price),
         image,
         quantity: 1,
+        description: description || ""
       });
     }
     saveCart();
     renderCart();
   }
 
-  // зробити доступною глобально для динамічно згенерованих карток
   window.addToCart = addToCart;
 
   function updateQuantity(name, change) {
@@ -162,6 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="cart-item-info">
             <strong>${item.name}</strong><br>
             <span>${item.price.toFixed(2)} ₴ × ${item.quantity}</span>
+            <button class="cart-description-btn" data-name="${item.name}">!</button>
           </div>
           <div class="cart-controls">
             <button class="qty-btn" data-name="${
@@ -176,6 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
       `
       )
       .join("");
+
 
     cartTotal.innerHTML = `
       <div class="cart-summary">
@@ -199,6 +201,16 @@ document.addEventListener("DOMContentLoaded", () => {
         cartItems = cartItems.filter((item) => item.name !== name);
         saveCart();
         renderCart();
+      });
+    });
+
+    document.querySelectorAll(".cart-description-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const name = e.target.dataset.name;
+        const item = cartItems.find((i) => i.name === name);
+        if (item && item.description) {
+          alert(item.description);
+        }
       });
     });
   }
@@ -416,7 +428,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function loadProducts() {
-    const API_URL = "http://localhost:3000/api/products"; // ← твій бекенд
+    const API_URL = "/api/products";
 
     startLoadingAnimation();
     catalogEl.innerHTML = "";
@@ -449,11 +461,13 @@ document.addEventListener("DOMContentLoaded", () => {
       .map((p) => {
         const name = escapeHtml(p.name ?? "Без назви");
         const weight = escapeHtml(p.weight ?? "");
+        const description = escapeHtml(p.description ?? "");
         const price = Number(p.price ?? 0);
         const image = p.image || "images/no-image.png";
+        const id = p.id ?? 0;
 
         return `
-      <div class="product-card">
+      <div class="product-card" data-id="${id}">
         <div class="product-img">
           <img src="${image}" alt="${name}">
         </div>
@@ -464,9 +478,13 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           <div class="product-bottom">
             <span class="product-price">${price.toFixed(2)} ₴</span>
-            <button class="add-btn" data-name="${name}" data-price="${price}" data-image="${image}">
+            <button class="add-btn" data-id="${id}" data-name="${name}" data-price="${price}" data-image="${image}" data-description="${description}">
               <span>+</span> Додати
             </button>
+          </div>
+          <div class="admin-controls admin-only">
+            <button class="admin-edit-btn" data-id="${id}">Редагувати</button>
+            <button class="admin-delete-btn" data-id="${id}">Видалити</button>
           </div>
         </div>
       </div>
@@ -474,15 +492,263 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .join("");
 
+
     // Делегування кліків: працює і для щойно згенерованих кнопок
-    catalogEl.addEventListener("click", (e) => {
-      const btn = e.target.closest(".add-btn");
-      if (!btn) return;
-      const name = btn.dataset.name;
-      const price = btn.dataset.price;
-      const image = btn.dataset.image || "images/no-image.png";
-      if (typeof window.addToCart === "function") {
-        window.addToCart(name, price, image);
+    catalogEl.addEventListener("click", async (e) => {
+      const addBtn = e.target.closest(".add-btn");
+      if (addBtn) {
+        const name = addBtn.dataset.name;
+        const price = addBtn.dataset.price;
+        const image = addBtn.dataset.image || "images/no-image.png";
+        const description = addBtn.dataset.description || "";
+        if (typeof window.addToCart === "function") {
+          window.addToCart(name, price, image, description);
+        }
+        return;
+      }
+
+      const editBtn = e.target.closest(".admin-edit-btn");
+      if (editBtn) {
+        const id = editBtn.dataset.id;
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+          alert("Немає доступу");
+          return;
+        }
+        try {
+          const res = await fetch(`/api/products/${id}`);
+          if (!res.ok) {
+            alert("Не вдалося завантажити товар");
+            return;
+          }
+          const product = await res.json();
+          const name = prompt("Назва", product.name || "");
+          if (!name) {
+            return;
+          }
+          const description = prompt("Опис", product.description || "") || "";
+          const weight = prompt("Вага", product.weight || "") || "";
+          const priceStr = prompt("Ціна", String(product.price ?? 0));
+          if (!priceStr) {
+            return;
+          }
+          const price = parseFloat(priceStr);
+          const image = prompt("URL зображення", product.image || "") || "";
+          const body = { name, description, weight, price, image };
+          const putRes = await fetch(`/api/products/${id}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token
+            },
+            body: JSON.stringify(body)
+          });
+          if (!putRes.ok) {
+            alert("Не вдалося зберегти товар");
+            return;
+          }
+          await loadProducts();
+        } catch (err) {
+          alert("Помилка мережі");
+        }
+        return;
+      }
+
+      const deleteBtn = e.target.closest(".admin-delete-btn");
+      if (deleteBtn) {
+        const id = deleteBtn.dataset.id;
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+          alert("Немає доступу");
+          return;
+        }
+        if (!confirm("Видалити товар?")) {
+          return;
+        }
+        try {
+          const res = await fetch(`/api/products/${id}`, {
+            method: "DELETE",
+            headers: {
+              Authorization: "Bearer " + token
+            }
+          });
+          if (!res.ok) {
+            alert("Не вдалося видалити товар");
+            return;
+          }
+          await loadProducts();
+        } catch (err) {
+          alert("Помилка мережі");
+        }
+      }
+    });
+  }
+
+  function getAuthUser() {
+    try {
+      const raw = localStorage.getItem("authUser");
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function getAuthToken() {
+    const token = localStorage.getItem("authToken");
+    return token || "";
+  }
+
+  function saveAuth(token, user) {
+    if (token) {
+      localStorage.setItem("authToken", token);
+    }
+    if (user) {
+      localStorage.setItem("authUser", JSON.stringify(user));
+    }
+    if (user && user.admin) {
+      document.body.classList.add("admin-user");
+    } else {
+      document.body.classList.remove("admin-user");
+    }
+  }
+
+  const existingUser = getAuthUser();
+  if (existingUser && existingUser.admin) {
+    document.body.classList.add("admin-user");
+  }
+
+  const loginForm = document.getElementById("loginForm");
+  if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const emailInput = document.getElementById("loginEmail");
+      const passwordInput = document.getElementById("loginPassword");
+      const email = emailInput ? emailInput.value.trim() : "";
+      const password = passwordInput ? passwordInput.value : "";
+      if (!email || !password) {
+        alert("Введіть email і пароль");
+        return;
+      }
+      try {
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          alert(data.error || "Помилка входу");
+          return;
+        }
+        saveAuth(data.token, data.user);
+        window.location.href = "/shop.html";
+      } catch (err) {
+        alert("Помилка мережі");
+      }
+    });
+  }
+
+  const registerForm = document.getElementById("registerForm");
+  if (registerForm) {
+    registerForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const emailInput = document.getElementById("regEmail");
+      const passwordInput = document.getElementById("regPassword");
+      const email = emailInput ? emailInput.value.trim() : "";
+      const password = passwordInput ? passwordInput.value : "";
+      if (!email || !password) {
+        alert("Введіть email і пароль");
+        return;
+      }
+      try {
+        const res = await fetch("/api/auth/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          alert(data.error || "Помилка реєстрації");
+          return;
+        }
+        saveAuth(data.token, data.user);
+        window.location.href = "/shop.html";
+      } catch (err) {
+        alert("Помилка мережі");
+      }
+    });
+  }
+
+  const adminPanel = document.getElementById("admin-panel");
+  const adminProductForm = document.getElementById("admin-product-form");
+  if (adminPanel) {
+    const user = getAuthUser();
+    if (!user || !user.admin) {
+      adminPanel.classList.add("hidden");
+    } else {
+      adminPanel.classList.remove("hidden");
+    }
+  }
+
+  if (adminProductForm) {
+    adminProductForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const user = getAuthUser();
+      if (!user || !user.admin) {
+        alert("Немає доступу");
+        return;
+      }
+      const token = getAuthToken();
+      if (!token) {
+        alert("Немає доступу");
+        return;
+      }
+      const nameInput = document.getElementById("admin-product-name");
+      const descriptionInput = document.getElementById("admin-product-description");
+      const weightInput = document.getElementById("admin-product-weight");
+      const priceInput = document.getElementById("admin-product-price");
+      const imageInput = document.getElementById("admin-product-image");
+
+      const name = nameInput ? nameInput.value.trim() : "";
+      const description = descriptionInput ? descriptionInput.value.trim() : "";
+      const weight = weightInput ? weightInput.value.trim() : "";
+      const priceValue = priceInput ? priceInput.value : "";
+      const image = imageInput ? imageInput.value.trim() : "";
+
+      if (!name || !priceValue) {
+        alert("Заповніть назву і ціну");
+        return;
+      }
+
+      const price = parseFloat(priceValue);
+
+      try {
+        const res = await fetch("/api/products", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
+          },
+          body: JSON.stringify({
+            name,
+            description,
+            weight,
+            price,
+            image
+          })
+        });
+        if (!res.ok) {
+          alert("Не вдалося створити товар");
+          return;
+        }
+        adminProductForm.reset();
+        await loadProducts();
+      } catch (err) {
+        alert("Помилка мережі");
       }
     });
   }
