@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Про нас | Come by</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <a class="logo" href="/main.html" aria-label="Повернутись на головну">
+        <img src="images/shop-icon.png" class="logo-img" alt="logo" />
+        Come by
+      </a>
+      <nav class="nav-center" id="nav">
+        <a href="/main.html">Головна</a>
+        <a href="/menu.html">Меню</a>
+        <a href="/shop.html">Магазин</a>
+        <a href="/combo.html">Комбо</a>
+        <a href="/about-us.html">Про нас</a>
+      </nav>
+      <div class="icons">
+        <div class="search-icon" id="search-btn">
+          <img src="images/search.png" width="24" alt="search" />
+          <div class="search-box" id="search-box" aria-hidden="true">
+            <input id="search-input" type="text" placeholder="Пошук..." />
+          </div>
+        </div>
+        <div class="icons-shopping">
+          <img src="images/shopping-cart.png" width="24" alt="cart" />
+        </div>
+        <div class="icons-user">
+          <a href="/registration.html"
+            ><img src="images/user.png" width="24" alt="user"
+          /></a>
+        </div>
+        <div class="burger" id="burger">
+          <img src="images/burger-icon.png" width="24" alt="menu" />
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="team-section">
+        <h1>Наша команда <span class="emoji">💕</span></h1>
+        <div class="team-image">
+          <img src="images/cats.jpeg" alt="Наша команда" />
+        </div>
+      </section>
+
+      <footer>
+        <div class="footer-content">
+          <div class="footer-logo">
+            <img src="images/shop-icon.png" width="32" alt="logo" />
+            <span class="footer-brand">Come by</span>
+            <p>Найкращі продукти та страви з доставкою до дверей.</p>
+          </div>
+          <div class="footer-contacts">
+            <b>Контакти</b>
+            <ul>
+              <li>Телефон: +380 12 345 6789</li>
+              <li>Email: info@comeby.example</li>
+              <li>Адреса: вул. Пушкіна, дім Колотушкіна</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">© 2025 Come by. Всі права захищено.</div>
+      </footer>
+    </main>
+
+    <div class="cart-sidebar" id="cart-sidebar" aria-hidden="true">
+      <div class="cart-header">
+        <h2>Моя корзина</h2>
+        <button id="close-cart">&times;</button>
+      </div>
+      <div class="cart-content"><p>Ваша корзина поки що пуста</p></div>
+      <div class="cart-total"></div>
+      <div class="cart-footer">
+        <button id="checkout-btn">Оформити замовлення</button>
+      </div>
+    </div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>

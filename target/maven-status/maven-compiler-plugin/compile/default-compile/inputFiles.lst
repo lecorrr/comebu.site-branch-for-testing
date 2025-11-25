@@ -1,6 +1,9 @@
-/home/lecor/comeby remake/src/main/java/com/example/shop/entity/User.java
-/home/lecor/comeby remake/src/main/java/com/example/shop/InternetShopApplication.java
-/home/lecor/comeby remake/src/main/java/com/example/shop/controller/AuthController.java
-/home/lecor/comeby remake/src/main/java/com/example/shop/repository/UserRepository.java
-/home/lecor/comeby remake/src/main/java/com/example/shop/service/AuthService.java
-/home/lecor/comeby remake/src/main/java/com/example/shop/util/TokenService.java
+C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\util\TokenService.java
+C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\entity\Product.java
+C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\entity\User.java
+C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\service\AuthService.java
+C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\repository\ProductRepository.java
+C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\InternetShopApplication.java
+C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\controller\AuthController.java
+C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\repository\UserRepository.java
+C:\Users\Aokigahara\Documents\GitHub\comebu.site-branch-for-testing\src\main\java\com\example\shop\controller\ProductController.java

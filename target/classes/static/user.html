@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Особистий кабінет | Come by</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="body-registration">
+    <header>
+      <div class="logo">
+        <a class="logo" href="/main.html" aria-label="Повернутись на головну">
+          <img src="images/shop-icon.png" class="logo-img" alt="logo" />
+          Come by
+        </a>
+      </div>
+
+      <nav class="nav-center" id="nav">
+        <a href="/main.html">Головна</a>
+        <a href="/menu.html">Меню</a>
+        <a href="/shop.html">Магазин</a>
+        <a href="/combo.html">Комбо</a>
+        <a href="/about-us.html">Про нас</a>
+      </nav>
+
+      <div class="icons">
+        <div class="search-icon" id="search-btn">
+          <img src="images/search.png" width="24" alt="search" />
+          <div class="search-box" id="search-box" aria-hidden="true">
+            <input id="search-input" type="text" placeholder="Пошук..." />
+          </div>
+        </div>
+
+        <div class="icons-shopping">
+          <img src="images/shopping-cart.png" width="24" alt="cart" />
+        </div>
+
+        <div class="icons-user">
+          <a href="/registration.html">
+            <img src="images/user.png" width="24" alt="user" />
+          </a>
+        </div>
+
+        <div class="burger" id="burger">
+          <img src="images/burger-icon.png" width="24" alt="menu" />
+        </div>
+      </div>
+    </header>
+
+    <main class="account-page">
+      <aside class="account-sidebar">
+        <ul>
+          <li id="profile-tab" class="active">
+            <img src="images/user.png" alt="user" />
+            <span>Обліковий запис</span>
+          </li>
+          <li id="orders-tab">
+            <img src="images/icon-order.png" alt="orders" />
+            <span>Замовлення</span>
+          </li>
+        </ul>
+      </aside>
+
+      <section class="account-content">
+        <div id="profile-content">
+          <h1>Обліковий запис</h1>
+          <div class="account-card">
+            <div class="account-item">
+              <div class="item-info">
+                <img src="images/user.png" alt="name" />
+                <div>
+                  <strong>Ім’я</strong>
+                  <p>Jon покупець</p>
+                </div>
+              </div>
+              <button
+                class="edit-btn"
+                data-field="name"
+                aria-label="Редагувати ім'я"
+              >
+                <img src="images/icon-edit.png" alt="edit" />
+              </button>
+            </div>
+
+            <div class="account-item">
+              <div class="item-info">
+                <img src="images/icon-envelope.png" alt="email" />
+                <div>
+                  <strong>Адреса ел. пошти</strong>
+                  <p>jopa@gmail.com</p>
+                </div>
+              </div>
+              <button
+                class="edit-btn"
+                data-field="email"
+                aria-label="Редагувати email"
+              >
+                <img src="images/icon-edit.png" alt="edit email" />
+              </button>
+            </div>
+
+            <div class="account-item">
+              <div class="item-info">
+                <img src="images/icon-telephone.png" alt="phone" />
+                <div>
+                  <strong>Номер телефону</strong>
+                  <p>+380123456789</p>
+                </div>
+              </div>
+              <button
+                class="edit-btn"
+                data-field="phone"
+                aria-label="Редагувати телефон"
+              >
+                <img src="images/icon-edit.png" alt="edit phone" />
+              </button>
+            </div>
+
+            <div class="account-item">
+              <div class="item-info">
+                <img src="images/icon-lock.png" alt="lock" />
+                <div>
+                  <strong>Змінити пароль</strong>
+                </div>
+              </div>
+              <button
+                class="edit-btn"
+                data-field="password"
+                aria-label="Змінити пароль"
+              >
+                <img src="images/icon-arrow.png" alt="arrow" />
+              </button>
+            </div>
+
+            <div class="account-item">
+              <div class="item-info">
+                <img src="images/icon-card.png" alt="payment" />
+                <div>
+                  <strong>Способи оплати</strong>
+                </div>
+              </div>
+              <button
+                class="edit-btn"
+                data-field="payment"
+                aria-label="Редагувати способи оплати"
+              >
+                <img src="images/icon-arrow.png" alt="arrow" />
+              </button>
+            </div>
+
+            <div class="account-item">
+              <div class="item-info">
+                <img src="images/icon-location.png" alt="address" />
+                <div>
+                  <strong>Адреса</strong>
+                </div>
+              </div>
+              <button
+                class="edit-btn"
+                data-field="address"
+                aria-label="Редагувати адресу"
+              >
+                <img src="images/icon-arrow.png" alt="arrow" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="orders-content" class="hidden">
+          <h1>Ваші замовлення</h1>
+          <p>У вас поки немає замовлень.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-logo">
+          <img src="images/shop-icon.png" width="32" alt="logo" />
+          <span class="footer-brand">Come by</span>
+          <p>
+            Найкращі продукти та страви з доставкою до дверей. Замовляйте онлайн
+            та насолоджуйтесь якістю.
+          </p>
+          <div class="footer-social">
+            <a href="#"><img src="images/instagram.png" alt="instagram" /></a>
+          </div>
+        </div>
+        <div class="footer-contacts">
+          <b>Контакти</b>
+          <ul>
+            <li>Телефон: redmi realmi a poco 8 pro</li>
+            <li>Email: example@gmail.com</li>
+            <li>Адреса: вул. Пушкіна, дім Колотушкіна</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2025 Come by. Всі права захищено.</div>
+    </footer>
+
+    <div class="cart-sidebar" id="cart-sidebar" aria-hidden="true">
+      <div class="cart-header">
+        <h2>Моя корзина</h2>
+        <button id="close-cart">&times;</button>
+      </div>
+      <div class="cart-content">
+        <p>Ваша корзина поки що пуста</p>
+      </div>
+      <div class="cart-total"></div>
+      <div class="cart-footer">
+        <button id="checkout-btn">Оформити замовлення</button>
+      </div>
+    </div>
+
+    <div
+      id="edit-modal"
+      class="modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+    >
+      <div class="modal-content" role="document">
+        <button class="modal-close" aria-label="Закрити">&times;</button>
+        <h3 id="modal-title">Редагувати</h3>
+
+        <div id="modal-row-single">
+          <input
+            id="modal-input"
+            class="modal-input"
+            type="text"
+            placeholder=""
+          />
+        </div>
+
+        <div id="modal-row-password" class="hidden">
+          <input
+            id="modal-old"
+            class="modal-input"
+            type="password"
+            placeholder="Старий пароль"
+          />
+          <input
+            id="modal-new"
+            class="modal-input"
+            type="password"
+            placeholder="Новий пароль"
+          />
+          <input
+            id="modal-confirm"
+            class="modal-input"
+            type="password"
+            placeholder="Повторіть новий пароль"
+          />
+          <div
+            id="modal-error"
+            aria-live="assertive"
+            style="
+              color: #c0392b;
+              font-size: 0.95rem;
+              display: none;
+              margin-top: 6px;
+            "
+          ></div>
+        </div>
+
+        <a
+          id="modal-forgot"
+          class="modal-forgot"
+          href="login.html"
+          aria-label="Забули пароль?"
+          >Забули пароль?</a
+        >
+
+        <div class="modal-buttons">
+          <button id="modal-cancel" class="btn btn-secondary" type="button">
+            Скасувати
+          </button>
+          <button id="modal-save" class="btn btn-primary" type="button">
+            Зберегти
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
