@@ -1,0 +1,9 @@
+/home/lecor/Downloads/siteRemake/admin3/comeby_remake_with_admin_rewired/src/main/java/com/example/shop/entity/Product.java
+/home/lecor/Downloads/siteRemake/admin3/comeby_remake_with_admin_rewired/src/main/java/com/example/shop/repository/ProductRepository.java
+/home/lecor/Downloads/siteRemake/admin3/comeby_remake_with_admin_rewired/src/main/java/com/example/shop/util/TokenService.java
+/home/lecor/Downloads/siteRemake/admin3/comeby_remake_with_admin_rewired/src/main/java/com/example/shop/InternetShopApplication.java
+/home/lecor/Downloads/siteRemake/admin3/comeby_remake_with_admin_rewired/src/main/java/com/example/shop/controller/AuthController.java
+/home/lecor/Downloads/siteRemake/admin3/comeby_remake_with_admin_rewired/src/main/java/com/example/shop/controller/ProductController.java
+/home/lecor/Downloads/siteRemake/admin3/comeby_remake_with_admin_rewired/src/main/java/com/example/shop/entity/User.java
+/home/lecor/Downloads/siteRemake/admin3/comeby_remake_with_admin_rewired/src/main/java/com/example/shop/service/AuthService.java
+/home/lecor/Downloads/siteRemake/admin3/comeby_remake_with_admin_rewired/src/main/java/com/example/shop/repository/UserRepository.java

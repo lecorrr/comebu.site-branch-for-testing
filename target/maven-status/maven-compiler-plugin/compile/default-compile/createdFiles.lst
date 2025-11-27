@@ -1,0 +1,10 @@
+com/example/shop/controller/ProductController.class
+com/example/shop/InternetShopApplication$1.class
+com/example/shop/controller/AuthController.class
+com/example/shop/entity/Product.class
+com/example/shop/service/AuthService.class
+com/example/shop/util/TokenService.class
+com/example/shop/entity/User.class
+com/example/shop/InternetShopApplication.class
+com/example/shop/repository/ProductRepository.class
+com/example/shop/repository/UserRepository.class
